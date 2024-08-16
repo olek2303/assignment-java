@@ -1,6 +1,7 @@
 package org.example.assignment.service;
 
 import jakarta.annotation.PostConstruct;
+import org.example.assignment.config.UserNotFoundException;
 import org.example.assignment.dto.Branch;
 import org.example.assignment.dto.Repository;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,11 +59,8 @@ public class GithubService {
             } else {
                 throw new RuntimeException("Failed to retrieve repositories");
             }
-        } catch (HttpClientErrorException e) {
-            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-                throw new RuntimeException("{\"status\": 404, \"message\": \"User not found\"}");
-            }
-            throw new RuntimeException("An error occurred: " + e.getMessage());
+        } catch (HttpClientErrorException.NotFound ex) {
+            throw new UserNotFoundException("User not found: " + username, ex);
         }
     }
 

@@ -13,7 +13,7 @@ The API returns the repositories which are not forks. It returns repository name
 
 ### Prerequisites
 
-- Java 17+
+- Java 21+
 - Maven 3.6+
 - A GitHub Personal Access Token (PAT) with the `repo` or `public_repo` scope.
 
@@ -51,3 +51,13 @@ mvn test
 ```
 
 ## API Documemntation
+
+List repositories which are not forks. You receive ownerLogin, name of the repository, last commit SHA for each branch.
+
+```
+GET /api/v1/github/{username}
+```
+
+If it is non-existing user you will receive status 404 and a message that there is no user with this username.
+
+
